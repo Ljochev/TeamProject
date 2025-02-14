@@ -1,0 +1,28 @@
+.about-us-card {
+  background-color: transparent;
+  color: #d0bead;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  width: 350px;
+  height: 370px;
+  border-radius: 70px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.about-us-card-img {
+  width: 280px;
+  height: 180px;
+}
+
+.about-us-card h3 {
+  font-size: 20px;
+  margin-bottom: 0;
+  margin-top: 0;
+  color: #c85e39;
+  /* color: #e88553; */
+}
+
+.about-us-card p {
+  font-size: 18px;
+}
