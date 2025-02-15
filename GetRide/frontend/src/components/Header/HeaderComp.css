@@ -1,0 +1,86 @@
+header {
+  display: flex;
+  align-items: center;
+  padding: 32px 100px;
+  justify-content: space-between;
+  font-weight: 500;
+  font-size: 22px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #e88553;
+
+  /* background-color: #333333; */
+}
+
+nav a {
+  color: #d0bead;
+  padding: 10px;
+}
+
+nav a.active {
+  color: #e88553;
+}
+
+.header--logo {
+  width: 150px;
+  height: 90px;
+}
+
+.header--nav__buttons {
+  display: flex;
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    text-align: center;
+  }
+
+  nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    text-align: start;
+    padding: 20px;
+  }
+
+  nav a {
+    margin: 0 20px;
+  }
+
+  .header--nav__buttons {
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 10px;
+  }
+
+  .header--logo {
+    width: 120px;
+    height: auto;
+  }
+}
+
+@media (max-width: 1024px) {
+  header {
+    padding: 20px 50px;
+  }
+
+  .header--logo {
+    width: 100px;
+    height: 70px;
+  }
+
+  nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    text-align: start;
+    padding: 20px;
+  }
+}
+
+@media (min-width: 1440px) {
+  header {
+    padding: 40px 120px;
+  }
+}
