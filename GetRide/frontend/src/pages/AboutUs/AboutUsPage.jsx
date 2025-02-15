@@ -232,8 +232,8 @@ const AboutUsPage = () => {
               closeModal={closeModal}
             />
           )}
-
-          <section className="contact-container-info">
+{/* go zakomentirav posto footer-ot go staviv vo route - ruterot  */}
+          {/* <section className="contact-container-info">
             <h4>Контакт</h4>
             <span>
               📩 <strong>Пишете ни на: </strong>
@@ -251,13 +251,13 @@ const AboutUsPage = () => {
                 <img src={facebook} alt="Facebook" />
               </Link>
             </span>
-            {/* <div className="contact-container-button">
+            <div className="contact-container-button">
               <MyButton
                 onClick={() => navigate("/how-it-works")}
                 name={"Како работи?"}
               />
-            </div> */}
-          </section>
+            </div>
+          </section> */}
         </div>
       </div>
     </div>
