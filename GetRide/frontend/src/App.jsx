@@ -9,7 +9,8 @@ import HomePage from "./pages/Home/HomePage";
 import ContactPage from "./pages/Contact/ContactPage";
 import AboutUsPage from "./pages/AboutUs/AboutUsPage";
 import HowItWorksPage from "./pages/HowItWorks/HowItWorksPage";
-import LoginPage from "./pages/LogPage/LoginPage.jsx";
+import LoginPage from "./pages/LoginPage/LoginPage.jsx";
+
 
 function App() {
   return (
