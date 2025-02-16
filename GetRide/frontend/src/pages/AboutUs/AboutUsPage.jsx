@@ -422,7 +422,7 @@ const AboutUsPage = () => {
           </section>
         </div>
 
-        <div className="contact-container">
+        {/* <div className="contact-container">
           <section className="contact-container-form">
             <form onSubmit={handleSubmit}>
               <h4>{t("question")}</h4>
@@ -462,26 +462,7 @@ const AboutUsPage = () => {
               message={modalMessage}
               closeModal={closeModal}
             />
-          )}
-
-            <span>
-              📩 <strong>{t("writeToUs")} </strong>
-              support@getrideapp.com
-            </span>
-            <span>
-              📱 <strong>{t("connectWithUs")} </strong>
-              <Link to="https://www.linkedin.com" target="_blank">
-                <img src={linkedin} alt="LinkedIn" />
-              </Link>
-              <Link to="https://www.twitter.com" target="_blank">
-                <img src={twitter} alt="Twitter" />
-              </Link>
-              <Link to="https://www.facebook.com" target="_blank">
-                <img src={facebook} alt="Facebook" />
-              </Link>
-            </span>
-
-        </div>
+          )} */}
       </div>
     </div>
   );
