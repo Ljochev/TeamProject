@@ -4,7 +4,9 @@ import "./HowItWorksPage.css";
 
 const HowItWorksPage = () => {
   const { t } = useTranslation();
-  return <div></div>;
+  return <div>
+    <h1>Kako Funkcionira?</h1>
+  </div>;
 };
 
 export default HowItWorksPage;
