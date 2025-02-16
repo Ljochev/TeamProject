@@ -463,8 +463,7 @@ const AboutUsPage = () => {
               closeModal={closeModal}
             />
           )}
-          <section className="contact-container-info">
-            <h4>{t("contact")}</h4>
+
             <span>
               📩 <strong>{t("writeToUs")} </strong>
               support@getrideapp.com
@@ -481,7 +480,7 @@ const AboutUsPage = () => {
                 <img src={facebook} alt="Facebook" />
               </Link>
             </span>
-          </section>
+
         </div>
       </div>
     </div>
