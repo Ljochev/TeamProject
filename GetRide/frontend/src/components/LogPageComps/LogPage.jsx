@@ -28,6 +28,7 @@ const LogPage = ({logData}) => {
       </div>
     </div>
     )
+    
   }
   
   export default LogPage

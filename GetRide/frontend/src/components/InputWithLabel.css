@@ -18,6 +18,7 @@
   .input-container input:active{
     border: 2px solid #1A2B33;
 }
+
 .input-container input::placeholder {
   color: rgba(85, 79, 79, 0.485);
 }
