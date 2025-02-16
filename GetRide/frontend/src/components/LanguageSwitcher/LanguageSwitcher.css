@@ -1,0 +1,11 @@
+.language-switcher button {
+  background: none;
+  margin-top: 10px;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  transition: transform 0.2s ease-in-out;
+}
+.language-switcher button:hover {
+  transform: scale(1.1);
+}

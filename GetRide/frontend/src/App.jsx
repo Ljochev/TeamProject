@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./i18n";
 import { useState } from "react";
 // import "./App.css";
 import Root from "./routes/Root.jsx";
@@ -12,7 +13,7 @@ import LoginPage from "./pages/LogPage/LoginPage.jsx";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route element={<Root />}>
           <Route path="/" element={<Layout header={true} footer={true}><HomePage /></Layout>} />
@@ -23,7 +24,7 @@ function App() {
 
         </Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 
