@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import "./i18n";
 import { useState } from "react";
 // import "./App.css";
 import Root from "./routes/Root.jsx";
@@ -10,7 +11,7 @@ import HowItWorksPage from "./pages/HowItWorks/HowItWorksPage";
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
         <Route element={<Root />}>
           <Route path="/" element={<HomePage />} />
@@ -19,7 +20,7 @@ function App() {
           <Route path="/contact" element={<ContactPage />} />
         </Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 

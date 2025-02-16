@@ -1,8 +1,10 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import MyButton from "../Button/MyButton";
 import "./ModalCard.css";
 
 const ModalCard = ({ show, message, closeModal }) => {
+  const { t, i18n } = useTranslation();
   if (!show) return null;
 
   return (
@@ -12,7 +14,7 @@ const ModalCard = ({ show, message, closeModal }) => {
         <MyButton
           className="modal-content-button"
           type="button"
-          name={"Затвори"}
+          name={t("close")}
           onClick={closeModal}
         />
       </div>
