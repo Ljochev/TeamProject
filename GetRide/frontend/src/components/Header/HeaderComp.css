@@ -1,12 +1,13 @@
 header {
   display: flex;
   align-items: center;
-  padding: 32px 100px;
+  padding: 10px 100px;
   justify-content: space-between;
   font-weight: 500;
   font-size: 22px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #e88553;
+  height: 13vh;
 
   /* background-color: #333333; */
 }
@@ -79,8 +80,8 @@ nav a.active {
   }
 }
 
-@media (min-width: 1440px) {
+/* @media (min-width: 1440px) {
   header {
     padding: 40px 120px;
   }
-}
+} */

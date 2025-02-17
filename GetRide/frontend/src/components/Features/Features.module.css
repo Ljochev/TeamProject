@@ -1,0 +1,24 @@
+.features {
+  display: flex;
+  gap: 40px;
+  margin: 40px;
+  align-items: center;
+  border-radius: 8%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.features h2 {
+  text-align: center;
+  font-size: 40px;
+}
+
+.features p {
+  font-size: 20px;
+  padding: 0 40px;
+}
+
+.features img {
+  width: 50%;
+  border-radius: 8%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
