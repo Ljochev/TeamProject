@@ -1,0 +1,35 @@
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 90px 60px 90px;
+  position: relative;
+}
+
+.logo {
+  width: 200px;
+}
+
+.footerNavItems {
+  list-style: none;
+  padding: 0;
+}
+
+.footerNavItems li {
+  margin: 5px 0;
+}
+
+.social {
+  align-self: flex-start;
+}
+
+.social img {
+  margin: 0 10px;
+}
+
+.copyright {
+  position: absolute;
+  bottom: 3px;
+  left: calc(50% - 90px);
+  font-size: 12px;
+}

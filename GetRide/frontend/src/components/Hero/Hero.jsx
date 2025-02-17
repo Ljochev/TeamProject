@@ -1,23 +1,17 @@
 import React from "react";
+import classes from "./Hero.module.css";
 import heroImg from "../../assets/hero.png";
-import Button from "../Button/Button";
-import "./hero.css";
+import Search from "../Search/Search";
 
 const Hero = () => {
   return (
-    <main id="hero">
-      <div className="hero-left-side">
-        <div className="hero-title-container">
-          <h2>Превоз до вашата дестинација </h2>
-          <div className="hero-buttons">
-            <Button main={false}>Барај превоз</Button>
-            <Button main={false}>Нуди превоз</Button>
-          </div>
-        </div>
+    <main className={classes.hero}>
+      <div className={classes.titles}>
+        <h1 className={classes.title}>Превоз до вашата дестинација </h1>
+        <Search vertical={true} />
       </div>
-
-      <div className="hero-img-container">
-        <img src={heroImg} alt="Hero" className="hero-img" />
+      <div className={classes.imageContainer}>
+        <img src={heroImg} alt="" />
       </div>
     </main>
   );

@@ -25,6 +25,20 @@
   text-decoration: none;
 }
 
+.searchButton {
+  margin-top: 18px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.horizontalButton {
+  margin-top: 0;
+  height: 43.2px;
+  margin-left: 7px;
+  padding: 10px 20px;
+  border-radius: 9px;
+}
+
 @media (max-width: 768px) {
   .contact-button {
     font-size: 15px;
