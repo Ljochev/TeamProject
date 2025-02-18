@@ -1,0 +1,68 @@
+.contactContainer {
+  width: 70%;
+  color: #d0bead;
+  display: flex;
+  flex-direction: column;
+  margin: 100px auto;
+}
+
+.contactForm {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.contactForm input,
+.contactForm textarea {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 18px;
+  padding: 15px;
+  border-radius: 8px;
+  border: 2px solid #e88553;
+  background-color: transparent;
+  color: #d0bead;
+}
+
+.contactForm textarea {
+  resize: vertical;
+  min-height: 200px;
+}
+
+.contactButton {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 40px;
+}
+
+@media (max-width: 1024px) {
+  .contactContainer {
+    width: 90%;
+    padding: 30px;
+  }
+  .contactForm input,
+  .contactForm textarea {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .contactContainer {
+    width: 80%;
+    padding: 20px;
+  }
+  .contactForm input,
+  .contactForm textarea {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .contactForm textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .contactButton {
+    justify-content: center;
+  }
+}

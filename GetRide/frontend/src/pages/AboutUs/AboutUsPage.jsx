@@ -264,15 +264,13 @@
 //     </div>
 //   );
 // };
-
 // export default AboutUsPage;
 
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./AboutUsPage.css";
 import MyButton from "../../components/Button/MyButton";
-import ModalCard from "../../components/Modal/ModalCard";
 import AboutUsCard from "../../components/AboutUs/AboutUsCard";
 import about from "../../assets/about.png";
 import mission from "../../assets/mission.png";
@@ -280,91 +278,19 @@ import affording from "../../assets/affording.png";
 import ecology from "../../assets/ecology.png";
 import flexibility from "../../assets/flexibility.png";
 import security from "../../assets/security.png";
-import linkedin from "../../assets/linkedin.svg";
-import facebook from "../../assets/facebook.svg";
-import twitter from "../../assets/twitter.svg";
 
 const AboutUsPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    email: "",
-    message: "",
-  });
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const validateForm = () => {
-    if (!formData.email || !formData.message) {
-      setModalMessage(t("modalError"));
-      setShowModal(true);
-      return false;
-    }
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(formData.email)) {
-      setModalMessage(t("modalError"));
-      setShowModal(true);
-      return false;
-    }
-    return true;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-    setIsSubmitting(true);
-
-    try {
-      const response = await fetch(
-        "http://localhost:8000/api/email/receive-email",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.error("Error response:", errorData);
-        throw new Error("Network response was not ok");
-      }
-      const data = await response.json();
-
-      setModalMessage(t("modalSuccess"));
-      setShowModal(true);
-      setFormData({ email: "", message: "" });
-    } catch (error) {
-      console.error("Error sending message:", error);
-      setModalMessage(t("modalError"));
-      setShowModal(true);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const closeModal = () => {
-    setShowModal(false);
-  };
   return (
-    <div className="about-us-container">
-      <div className="about-us-overlay">
-        <section className="about-us-first">
+    <div className="aboutContainer">
+      <div className="aboutOverlay">
+        <section className="aboutFirst">
           <div>
             <h1>{t("aboutUs")}</h1>
             {/* <p>{t("welcome")}</p> */}
-            <div dangerouslySetInnerHTML={{ __html: t("welcome") }} />
+            <p dangerouslySetInnerHTML={{ __html: t("welcome") }} />
           </div>
           <img src={about} alt="about" className="about-us-img" />
         </section>
@@ -416,70 +342,10 @@ const AboutUsPage = () => {
               <MyButton
                 type="submit"
                 name={t("ctaButton")}
-                onClick={() => navigate("/sign-up")}
+                onClick={() => navigate("/register")}
               />
             </div>
           </section>
-        </div>
-
-        <div className="contact-container">
-          <section className="contact-container-form">
-            <form onSubmit={handleSubmit}>
-              <h4>{t("question")}</h4>
-              <div className="contact-container-form-input">
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  placeholder={t("emailPlaceholder")}
-                  autoComplete="email"
-                  required
-                />
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  placeholder={t("messagePlaceholder")}
-                  required
-                ></textarea>
-              </div>
-              <div className="contact-container-button">
-                <MyButton
-                  type="submit"
-                  name={t("sendMessage")}
-                  onClick={handleSubmit}
-                  disabled={isSubmitting}
-                />
-              </div>
-            </form>
-          </section>
-          {showModal && (
-            <ModalCard
-              show={showModal}
-              message={modalMessage}
-              closeModal={closeModal}
-            />
-          )}
-
-          <span>
-            📩 <strong>{t("writeToUs")} </strong>
-            support@getrideapp.com
-          </span>
-          <span>
-            📱 <strong>{t("connectWithUs")} </strong>
-            <Link to="https://www.linkedin.com" target="_blank">
-              <img src={linkedin} alt="LinkedIn" />
-            </Link>
-            <Link to="https://www.twitter.com" target="_blank">
-              <img src={twitter} alt="Twitter" />
-            </Link>
-            <Link to="https://www.facebook.com" target="_blank">
-              <img src={facebook} alt="Facebook" />
-            </Link>
-          </span>
         </div>
       </div>
     </div>

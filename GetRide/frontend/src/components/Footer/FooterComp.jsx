@@ -1,11 +1,9 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import MyButton from "../Button/MyButton";
 import linkedin from "../../assets/linkedin.svg";
 import facebook from "../../assets/facebook.svg";
 import twitter from "../../assets/twitter.svg";
-import "./FooterComp.css";
 import logoImg from "../../assets/logo.png";
 import classes from "./FooterComp.module.css";
 

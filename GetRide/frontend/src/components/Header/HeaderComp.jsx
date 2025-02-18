@@ -70,13 +70,14 @@
 // };
 
 // export default HeaderComp;
+
 import React, { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/logo.png";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import MyButton from "../Button/MyButton";
-import "./HeaderComp.css";
+import classes from "./HeaderComp.module.css";
 
 const HeaderComp = () => {
   const { i18n, t } = useTranslation();
@@ -85,28 +86,23 @@ const HeaderComp = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const name = window.localStorage.getItem("userName");
-    if (name) {
-      setUserName(name);
-    }
-  }, []);
-
-  useEffect(() => {
-    const savedLanguage = localStorage.getItem("language") || "mk";
-    i18n.changeLanguage(savedLanguage);
+    setUserName(localStorage.getItem("userName") || "");
+    i18n.changeLanguage(localStorage.getItem("language") || "mk");
     setIsLoading(false);
   }, [i18n]);
 
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <header>
-      <img className="header--logo" src={logo} alt="Logo" />
-      <nav>
+    <header className={classes.header}>
+      <img className={classes.headerLogo} src={logo} alt="Logo" />
+      <nav className={classes.nav}>
         <NavLink
           to="/"
           className={({ isActive }) =>
-            isActive ? "nav-link active" : "nav-link"
+            isActive
+              ? `${classes.navLink} ${classes.activeNavLink}`
+              : classes.navLink
           }
         >
           {t("home")}
@@ -114,7 +110,9 @@ const HeaderComp = () => {
         <NavLink
           to="/about-us"
           className={({ isActive }) =>
-            isActive ? "nav-link active" : "nav-link"
+            isActive
+              ? `${classes.navLink} ${classes.activeNavLink}`
+              : classes.navLink
           }
         >
           {t("aboutUs")}
@@ -122,7 +120,9 @@ const HeaderComp = () => {
         <NavLink
           to="/how-it-works"
           className={({ isActive }) =>
-            isActive ? "nav-link active" : "nav-link"
+            isActive
+              ? `${classes.navLink} ${classes.activeNavLink}`
+              : classes.navLink
           }
         >
           {t("howItWorks")}
@@ -130,15 +130,17 @@ const HeaderComp = () => {
         <NavLink
           to="/contact"
           className={({ isActive }) =>
-            isActive ? "nav-link active" : "nav-link"
+            isActive
+              ? `${classes.navLink} ${classes.activeNavLink}`
+              : classes.navLink
           }
         >
           {t("contact")}
         </NavLink>
       </nav>
-      <div className="header--nav__buttons">
+      <div className={classes.headerButtons}>
         {userName ? (
-          <span className="header--welcome">
+          <span className="headerWelcome">
             {t("welcoming", { name: userName })}
           </span>
         ) : (

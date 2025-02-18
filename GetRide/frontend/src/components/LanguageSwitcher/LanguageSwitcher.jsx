@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Flag from "react-world-flags";
-import "./LanguageSwitcher.css";
+import classes from "./LanguageSwitcher.module.css";
 
 const LanguageSwitcher = () => {
   const { i18n } = useTranslation();
@@ -20,25 +20,22 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="language-switcher">
-      <button
-        className={activeLang === "mk" ? "active" : ""}
-        onClick={() => handleLanguageChange("mk")}
-      >
-        <Flag code="MK" style={{ width: 30, height: 20 }} />
-      </button>
-      <button
-        className={activeLang === "sq" ? "active" : ""}
-        onClick={() => handleLanguageChange("sq")}
-      >
-        <Flag code="AL" style={{ width: 30, height: 20 }} />
-      </button>
-      <button
-        className={activeLang === "en" ? "active" : ""}
-        onClick={() => handleLanguageChange("en")}
-      >
-        <Flag code="GB" style={{ width: 30, height: 20 }} />
-      </button>
+    <div className={classes.languageSwitcher}>
+      {[
+        { code: "MK", lang: "mk" },
+        { code: "AL", lang: "sq" },
+        { code: "GB", lang: "en" },
+      ].map(({ code, lang }) => (
+        <button
+          key={lang}
+          className={`${classes.languageButton} ${
+            activeLang === lang ? classes.active : ""
+          }`}
+          onClick={() => handleLanguageChange(lang)}
+        >
+          <Flag code={code} style={{ width: 30, height: 20 }} />
+        </button>
+      ))}
     </div>
   );
 };
