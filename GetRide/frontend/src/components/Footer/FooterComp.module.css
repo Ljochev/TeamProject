@@ -19,6 +19,16 @@
   margin: 5px 0;
 }
 
+.footerNavLink {
+  color: #d0bead;
+
+  text-decoration: none;
+}
+
+.footerNavLink:hover {
+  color: #e88553;
+}
+
 .social {
   align-self: flex-start;
 }

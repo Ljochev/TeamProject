@@ -20,20 +20,30 @@ const FooterComp = () => {
         <nav className={classes.footerNav}>
           <ul className={classes.footerNavItems}>
             <li>
-              <Link to="/login">Логирај се</Link>{" "}
+              <Link to="/login" className={classes.footerNavLink}>
+                Логирај се
+              </Link>{" "}
             </li>
             <li>
-              <Link to="/register">Регистрирај се</Link>{" "}
+              <Link to="/register" className={classes.footerNavLink}>
+                Регистрирај се
+              </Link>{" "}
             </li>
 
             <li>
-              <Link to="/about-us">За нас</Link>{" "}
+              <Link to="/about-us" className={classes.footerNavLink}>
+                За нас
+              </Link>{" "}
             </li>
             <li>
-              <Link to="/how-it-works">Како работи</Link>{" "}
+              <Link to="/how-it-works" className={classes.footerNavLink}>
+                Како работи
+              </Link>{" "}
             </li>
             <li>
-              <Link to="/contact">Контакт</Link>{" "}
+              <Link to="/contact" className={classes.footerNavLink}>
+                Контакт
+              </Link>{" "}
             </li>
           </ul>
         </nav>
