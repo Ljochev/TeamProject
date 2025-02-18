@@ -8,3 +8,7 @@
   color: #1a2b33;
   outline: none;
 }
+
+.input:focus::placeholder {
+  visibility: hidden;
+}

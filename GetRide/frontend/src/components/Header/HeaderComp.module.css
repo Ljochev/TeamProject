@@ -15,6 +15,10 @@ header {
   transition: color 0.3s ease-in-out;
 }
 
+.navLink:hover {
+  color: #f57c00;
+}
+
 .activeNavLink {
   color: #e88553;
   font-weight: bold;
