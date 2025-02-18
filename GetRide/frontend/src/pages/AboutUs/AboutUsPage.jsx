@@ -292,18 +292,18 @@ const AboutUsPage = () => {
             {/* <p>{t("welcome")}</p> */}
             <p dangerouslySetInnerHTML={{ __html: t("welcome") }} />
           </div>
-          <img src={about} alt="about" className="about-us-img" />
+          <img src={about} alt="about" className="aboutImg" />
         </section>
 
-        <section className="mission-section">
-          <img src={mission} alt="mission" className="mission-img" />
+        <section className="missionSection">
+          <img src={mission} alt="mission" className="missionImg" />
           <div>
             <h3>{t("missionTitle")}</h3>
             <p>{t("missionDescription")}</p>
           </div>
         </section>
 
-        <section className="why-choose-us">
+        <section className="chooseUs">
           <h3>{t("whyChooseUs")}</h3>
           <div className="reasons">
             <AboutUsCard
@@ -329,16 +329,18 @@ const AboutUsPage = () => {
           </div>
         </section>
 
-        <div className="our-future">
-          <section className="our-story">
+        <div className="ourFuture">
+          <section className="ourStory">
             <h3>{t("ourStory")}</h3>
-            <p>{t("ourStoryDescription")}</p>
+            <p dangerouslySetInnerHTML={{ __html: t("ourStoryDescription") }} />
           </section>
 
-          <section className="join-movement">
+          <section className="joinMovement">
             <h3>{t("joinMovement")}</h3>
-            <p>{t("joinMovementDescription")}</p>
-            <div className="cta-button">
+            <p
+              dangerouslySetInnerHTML={{ __html: t("joinMovementDescription") }}
+            />
+            <div className="ctaButton">
               <MyButton
                 type="submit"
                 name={t("ctaButton")}

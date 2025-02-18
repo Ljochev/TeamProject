@@ -52,8 +52,8 @@ a {
 }
 
 .aboutFirst,
-.our-future,
-.mission-section {
+.ourFuture,
+.missionSection {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
@@ -66,9 +66,9 @@ a {
 }
 
 .aboutFirst p,
-.join-movement p,
-.our-story p,
-.mission-section p {
+.joinMovement p,
+.ourStory p,
+.missionSection p {
   font-size: 18px;
   color: #d0bead;
   line-height: 1.6;
@@ -78,8 +78,8 @@ a {
   font-size: 20px;
 }
 
-.about-us-img,
-.mission-img {
+.aboutImg,
+.missionImg {
   max-width: 90%;
   height: auto;
   display: block;
@@ -88,7 +88,7 @@ a {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
-.cta-button {
+.ctaButton {
   margin-top: 50px;
   display: flex;
   justify-content: center;
@@ -119,15 +119,15 @@ a {
 
 @media (max-width: 768px) {
   .aboutFirst,
-  .our-future,
-  .mission-section {
+  .ourFuture,
+  .missionSection {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 30px;
   }
 
-  .about-us-img,
-  .mission-img {
+  .aboutImg,
+  .missionImg {
     max-width: 90%;
   }
 
@@ -140,7 +140,7 @@ a {
     margin-top: 20px;
   }
 
-  .cta-button {
+  .ctaButton {
     display: flex;
     justify-content: center;
   }
@@ -148,21 +148,21 @@ a {
 
 @media (max-width: 1024px) {
   .aboutFirst,
-  .our-future,
-  .mission-section {
+  .ourFuture,
+  .missionSection {
     gap: 40px;
   }
 }
 
 @media (min-width: 1024px) {
   .aboutFirst,
-  .our-future,
-  .mission-section {
+  .ourFuture,
+  .missionSection {
     max-width: 1700px;
     gap: 100px;
   }
 
-  .cta-button {
+  .ctaButton {
     justify-content: flex-start;
   }
 }
