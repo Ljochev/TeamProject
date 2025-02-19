@@ -7,3 +7,16 @@
   gap: 30px;
   padding: 40px 20px;
 }
+
+.steps div {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.steps div:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.steps div:nth-child(2n) {
+  margin-top: 80px;
+}
