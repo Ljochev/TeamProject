@@ -23,7 +23,6 @@ const handleLook = (e) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      console.log(`${import.meta.env.VITE_API_BASE_URL}/api/account/login`);
       const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/account/login` , {
         method: 'POST',
         headers: {
