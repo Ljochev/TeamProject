@@ -22,29 +22,32 @@ const handleLook = (e) => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    navigate("/")
-    // try {
-    //   const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user/login` , {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       email,
-    //       password,
-    //     }),
-    //   });
+    try {
+      console.log(`${import.meta.env.VITE_API_BASE_URL}/api/account/login`);
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/account/login` , {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-    //   const jwt_token = await response.json();
-    //   if (jwt_token && jwt_token.token) {
-    //     localStorage.setItem('jwt_token', jwt_token.token);
-    //   }
-    //   const decodedToken = jwtDecode(jwt_token.token);
-    //   decodedToken.type === 'mentor' ?  navigate("/mentorDashboard") : navigate("/companyDashboard");
-    // } catch (error) {
-    //   console.log("This is the error: ", error);
-    //   setError(`Failed to login. Please check your email and password. ${error.toString()}`);
-    // }
+      const jwt_token = await response.json();
+      console.log(jwt_token);
+
+      if (jwt_token && jwt_token.token) {
+        console.log(jwt_token);
+        localStorage.setItem('jwt_token', jwt_token.token);
+      }
+      const decodedToken = jwtDecode(jwt_token.token);
+      console.log(decodedToken);
+    } catch (error) {
+      console.log("This is the error: ", error);
+      setError(`Failed to login. Please check your email and password. ${error.toString()}`);
+    }
     };
 
   return (

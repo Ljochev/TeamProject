@@ -20,6 +20,7 @@ const accoutSchema = mongoose.Schema(
     },
     profileImage: {
       type: String,
+      default: '',
     },
     isVerified: {
       type: Boolean,
