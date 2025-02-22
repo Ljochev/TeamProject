@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .message-title,
+      .email {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .message {
+        padding-top: 10px;
+        font-size: 16px;
+        font-weight: 400;
+      }
+      .user-email {
+        font-weight: 400;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="message-container">
+      <p class="email">
+        Емаил за контакт: <span class="user-email"><%= email %></span>
+      </p>
+      <hr />
+      <p class="message-title">Порака:</p>
+      <p class="message"><%= message %></p>
+    </div>
+  </body>
+</html>
