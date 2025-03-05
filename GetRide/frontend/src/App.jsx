@@ -11,6 +11,7 @@ import AboutUsPage from "./pages/AboutUs/AboutUsPage";
 import HowItWorksPage from "./pages/HowItWorks/HowItWorksPage";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import RidesPage from "./pages/Rides/RidesPage.jsx";
+import GoogleMaps from "./components/GoogleMaps/GoogleMaps.jsx";
 
 function App() {
   return (
@@ -62,6 +63,14 @@ function App() {
             element={
               <Layout header={true} footer={false}>
                 <RidesPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="/google"
+            element={
+              <Layout header={true} footer={false}>
+                <GoogleMaps />
               </Layout>
             }
           />
