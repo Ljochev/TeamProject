@@ -77,6 +77,7 @@ import { useTranslation } from "react-i18next";
 import logo from "../../assets/logo.png";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 import MyButton from "../Button/MyButton";
+import DropdownMenu from "../DropDownMenu/DropDownMenu";
 import classes from "./HeaderComp.module.css";
 
 const HeaderComp = () => {
@@ -90,6 +91,11 @@ const HeaderComp = () => {
     i18n.changeLanguage(localStorage.getItem("language") || "mk");
     setIsLoading(false);
   }, [i18n]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("userName");
+    navigate("/login");
+  };
 
   if (isLoading) return <div>Loading...</div>;
 
@@ -140,10 +146,11 @@ const HeaderComp = () => {
       </nav>
       <div className={classes.headerButtons}>
         {userName ? (
-          <span className="headerWelcome">
-            {t("welcoming", { name: userName })}
-          </span>
+          <DropdownMenu userName={userName} onLogout={handleLogout} />
         ) : (
+          // <span className="headerWelcome">
+          //   {t("welcoming", { name: userName })}
+          // </span>
           <>
             <MyButton
               onClick={() => navigate("/register")}
