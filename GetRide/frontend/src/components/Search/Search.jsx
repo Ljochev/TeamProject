@@ -41,6 +41,15 @@ const Search = ({ vertical = false }) => {
     }
   };
 
+  const handleSearch = () => {
+    const queryParams = new URLSearchParams({
+      leaving,
+      arriving,
+      date,
+    }).toString();
+    navigate(`/rides?${queryParams}`);
+  };
+
   const calculateDuration = () => {
     if (!leaving || !arriving) {
       alert("Please enter both locations");
@@ -63,11 +72,6 @@ const Search = ({ vertical = false }) => {
         }
       }
     );
-  };
-
-  const handleSearchClick = () => {
-    calculateDuration();
-    navigate("/rides");
   };
 
   const togglePassengersComp = () => {
@@ -161,11 +165,8 @@ const Search = ({ vertical = false }) => {
       <MyButton
         name="Барај"
         className={vertical ? "searchButton" : "horizontalButton"}
-        // onClick={() => navigate("/rides")}
-        // onClick={calculateDuration}
-        onClick={handleSearchClick}
+        onClick={handleSearch}
       />
-      {duration && <p>Времетраење: {duration}</p>}
     </div>
   );
 };
