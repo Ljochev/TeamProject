@@ -12,3 +12,29 @@
   width: 80%;
   margin: 20px auto;
 }
+
+.passengerInputContainer {
+  position: relative;
+  width: 100%;
+}
+
+.buttonToggle {
+  position: absolute;
+  right: 27%;
+  top: 25%;
+  font-size: 25px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #c85e39;
+  background-color: transparent;
+  width: 20px;
+  height: 30px;
+  border: none;
+  cursor: pointer;
+}
+
+.buttonToggle:hover {
+  background-color: transparent;
+}

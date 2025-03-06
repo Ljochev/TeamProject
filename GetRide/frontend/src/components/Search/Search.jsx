@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import classes from "./Search.module.css";
 import Input from "../Input/Input";
 import MyButton from "../Button/MyButton";
+import PassengersComp from "../Passengers/PassengersComp";
 import useGoogleMaps from "../../hooks/useGoogleMaps";
 import { Autocomplete } from "@react-google-maps/api";
 
@@ -14,6 +15,14 @@ const Search = ({ vertical = false }) => {
   const [arriving, setArriving] = useState("");
   const [duration, setDuration] = useState(null);
   const [directions, setDirections] = useState(null);
+  const [showPassengersComp, setShowPassengersComp] = useState(false);
+  const [passengerInputValue, setPassengerInputValue] = useState("");
+  const [passengers, setPassengers] = useState({
+    adults: 0,
+    children: 0,
+    babies: 0,
+    reducedMobility: [],
+  });
 
   const leavingRef = useRef(null);
   const arrivingRef = useRef(null);
@@ -54,6 +63,40 @@ const Search = ({ vertical = false }) => {
         }
       }
     );
+  };
+
+  const handleSearchClick = () => {
+    calculateDuration();
+    navigate("/rides");
+  };
+
+  const togglePassengersComp = () => {
+    setShowPassengersComp(!showPassengersComp);
+  };
+
+  const updatePassengerInput = (updatedPassengers) => {
+    setPassengers((prevPassengers) => {
+      const newPassengers = {
+        ...prevPassengers,
+        adults: updatedPassengers.adults,
+        children: updatedPassengers.children,
+        babies: updatedPassengers.babies,
+        reducedMobility: updatedPassengers.reducedMobility,
+      };
+
+      const totalPassengers =
+        newPassengers.adults +
+        newPassengers.children +
+        newPassengers.babies +
+        newPassengers.reducedMobility.length;
+
+      const passengerLabel = totalPassengers === 1 ? "патник" : "патници";
+
+      setPassengerInputValue(`${totalPassengers}  ${passengerLabel}`);
+      setShowPassengersComp(false);
+
+      return newPassengers;
+    });
   };
 
   return (
@@ -97,16 +140,30 @@ const Search = ({ vertical = false }) => {
         value={date}
         onChange={(e) => setDate(e.target.value)}
       />
-      <Input
-        name={"passangers"}
-        id={"passangers"}
-        placeholder="Број на патници"
-      />
+      <div className={classes.passengerInputContainer}>
+        <Input
+          name={"passangers"}
+          id={"passangers"}
+          placeholder="Број на патници"
+          readOnly
+          value={passengerInputValue}
+          onClick={togglePassengersComp}
+        />
+        <button className={classes.buttonToggle} onClick={togglePassengersComp}>
+          ▼
+        </button>
+      </div>
+
+      {showPassengersComp && (
+        <PassengersComp onAdd={updatePassengerInput} passengers={passengers} />
+      )}
+
       <MyButton
         name="Барај"
         className={vertical ? "searchButton" : "horizontalButton"}
         // onClick={() => navigate("/rides")}
-        onClick={calculateDuration}
+        // onClick={calculateDuration}
+        onClick={handleSearchClick}
       />
       {duration && <p>Времетраење: {duration}</p>}
     </div>
