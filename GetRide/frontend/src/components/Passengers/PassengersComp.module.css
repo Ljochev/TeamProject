@@ -1,0 +1,81 @@
+.passengerSelection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  width: 50%;
+}
+
+.passengerControl {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+}
+
+.passengerControl div {
+  display: flex;
+}
+
+.passengerControl span {
+  font-size: 16px;
+}
+
+.passengerControl button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  font-size: 25px;
+  font-weight: 600;
+  color: #c85e39;
+  background-color: #d0bead;
+  margin-right: 5px;
+  margin-left: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.passengerControl button:hover {
+  background-color: #e1e1e1;
+}
+
+.reducedMobilityForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.formGroup input,
+.formGroup select {
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 10px;
+  background-color: #d0bead;
+}
+
+.addButton {
+  width: 100px;
+  height: 30px;
+  font-size: 15px;
+  font-weight: 600;
+  background-color: #d0bead;
+  color: black;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  align-self: flex-end;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #d0bead;
+}
