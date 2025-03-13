@@ -1,11 +1,11 @@
-.input-container {
+.inputContainer {
     position: relative;
     margin: 20px 0;
     z-index: 1;
 
   }
 
-  .input-container input {
+  .inputContainer input {
     width: 100%;
     padding: 16px 16px 16px 24px;
     border: 2px solid #1a2b335b;
@@ -15,16 +15,16 @@
     background-color: #EF965D;
     color: #1A2B33;
   }
-  .input-container input:active{
+  .inputContainer input:active{
     border: 2px solid #1A2B33;
 }
 
-.input-container input::placeholder {
+.inputContainer input::placeholder {
   color: rgba(85, 79, 79, 0.485);
 }
 
 
-  .input-container label {
+  .inputContainer label {
     position: absolute;
     top: -10px;
     left: 24px;

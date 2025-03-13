@@ -3,10 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { jwtDecode } from "jwt-decode";
 import EyeLook from '../../assets/eye_lookup.svg';
 import NoEyeLook from '../../assets/eye_no_lookup.svg';
-import InputWithLabel from '../../components/InputWithLabel.jsx'
+import InputWithLabel from '../../components/Input/InputWithLabel.jsx'
 import LogPage from '../../components/LogPageComps/LogPage';
 import MyButton from '../../components/Button/MyButton';
-import './LoginPage.css';
+import styles from './LoginPage.module.css';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -55,7 +55,7 @@ const handleLook = (e) => {
         <>
        <h2>LOG IN</h2>
        <span>Enter your email and pass to login.</span>
-       <form  className='login_form' onSubmit={handleLogin}>
+       <form  className={styles.login_form} onSubmit={handleLogin}>
         <InputWithLabel
         value={email}
         label='Email'
@@ -65,7 +65,7 @@ const handleLook = (e) => {
         placeholder="someone@somewhere.com"
         required
         />
-        <div className='password_input'>
+        <div className={styles.password_input}>
         <InputWithLabel
         value={password}
         label='Password'

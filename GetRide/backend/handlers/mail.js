@@ -12,7 +12,7 @@ const sendContactMail = async (req, res) => {
       "views",
       `contactMessage.ejs`
     );
-
+    console.log(req.body);
     const html = await ejs.renderFile(
       templatePath,
       { email, message },
@@ -20,7 +20,10 @@ const sendContactMail = async (req, res) => {
     );
 
     await transporter.sendMail({
-      from: process.env.MAIL_USER,
+      from: {
+        name: "Get Ride",
+        address: req.body.email, 
+      },
       to: "getride25@gmail.com",
       subject: `Нов контакт емаил од ${email}`,
       text: message,
@@ -34,6 +37,32 @@ const sendContactMail = async (req, res) => {
     return res.status(400).send({
       error: "Настана грешка при праќање на вашата порака. Обидете се повторно",
     });
+  }
+};
+
+const sendResetEmail = async (to, subject, template, token) => {
+  try {
+    const templatePath = path.join(__dirname, 'views', `${template}.ejs`);
+
+    const html = await ejs.renderFile(templatePath, {token}, { async: true });
+
+    const mailOptions = {
+      from: {
+        name: "GetRide",
+        address: process.env.MAIL_USER, 
+      },
+      to,
+      subject,
+      html,
+    };
+
+    // Send the email
+    const info = await transport.sendMail(mailOptions);
+
+    // console.log(`Email sent successfully. Info: ${JSON.stringify(info)}`);
+    return JSON.stringify(info);
+  } catch (err) {
+    console.error('Error sending email:', err);
   }
 };
 
