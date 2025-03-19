@@ -127,7 +127,7 @@ const RegisterPage = () => {
      <LogPage
     logData ={ 
       <>
-     <form  className={styles.register_form} >
+     <form  className={styles.register_form} onSubmit={registerAccount} >
        <InputWithLabel
       value={name}
       label={"Full Name"}
@@ -191,7 +191,6 @@ const RegisterPage = () => {
       
       <MyButton 
       disabled={!(passStrenght && passMatch && emailAddressPattern)}
-      onClick={(e) => {e.preventDefault(), registerAccount()}}
       name={"Register"} 
       width={"100%"}
       />
