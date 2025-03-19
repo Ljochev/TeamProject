@@ -6,11 +6,13 @@ const { expressjwt: jwt } = require("express-jwt");
 const {
   register,
   login,
-  checkEmail,
   updateUserAccount,
+  passwordLink,
+  checkResetEmail,
   resetAccountPassword,
   deleteUserAccount,
   getUserAccountById,
+  checkEmail,
 } = require("./handlers/authAccount.js");
 const { sendContactMail } = require("./handlers/mail.js");
 
@@ -36,7 +38,7 @@ app.use(
       "/api/account/login",
       "/api/account/checkEmail",
       "/api/send-contact-mail",
-      // "/api/account/passwordResetLink",
+      "/api/account/passwordResetLink",
       // ruta za contact message
       // "/api/contactMessage",
       { url: /^\/api\/account\/checkResetToken\/.*/, methods: ["GET"] },
@@ -51,6 +53,10 @@ app.post("/api/account/login", login);
 app.put("/api/account/update", updateUserAccount);
 app.post("/api/account/checkEmail", checkEmail);
 app.post("/api/send-contact-mail", sendContactMail);
+// Password reset routes
+app.post("/api/account/passwordResetLink", passwordLink);
+app.get("/api/account/checkResetToken/:resetToken", checkResetEmail);
+app.put("/api/account/resetPassword/:resetToken", resetAccountPassword);
 
 const server = app.listen(process.env.PORT, () => {
   console.log(`Server is up on ${process.env.PORT}`);

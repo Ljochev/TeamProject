@@ -12,7 +12,6 @@ const sendContactMail = async (req, res) => {
       "views",
       `contactMessage.ejs`
     );
-    console.log(req.body);
     const html = await ejs.renderFile(
       templatePath,
       { email, message },
@@ -42,11 +41,12 @@ const sendContactMail = async (req, res) => {
 
 const sendResetEmail = async (to, subject, template, token) => {
   try {
-    const templatePath = path.join(__dirname, 'views', `${template}.ejs`);
+    const templatePath = path.join(__dirname, '../views', `${template}.ejs`);
 
     const html = await ejs.renderFile(templatePath, {token}, { async: true });
 
-    const mailOptions = {
+    // Send the email
+    const info = await transporter.sendMail({
       from: {
         name: "GetRide",
         address: process.env.MAIL_USER, 
@@ -54,16 +54,15 @@ const sendResetEmail = async (to, subject, template, token) => {
       to,
       subject,
       html,
-    };
+  });
 
-    // Send the email
-    const info = await transport.sendMail(mailOptions);
-
-    // console.log(`Email sent successfully. Info: ${JSON.stringify(info)}`);
+    console.log(`Email sent successfully. Info: ${JSON.stringify(info)}`);
     return JSON.stringify(info);
   } catch (err) {
     console.error('Error sending email:', err);
   }
 };
 
-module.exports = { sendContactMail };
+module.exports = { 
+  sendContactMail,
+  sendResetEmail, };

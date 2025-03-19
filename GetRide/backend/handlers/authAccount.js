@@ -1,7 +1,8 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
-
+const crypto = require('node:crypto');
+// const sendResetEmail = require('../handlers/mail.js');
+const { sendResetEmail } = require('../handlers/mail.js');
 
 const {
     newAccountValidate,
@@ -10,7 +11,6 @@ const {
     // contactMessageValidate,
     validateAccount,
 } = require("../pkg/account/accountValidate");
-
 const {
     createAccount,
     getAccountByEmail,
@@ -20,7 +20,7 @@ const {
 } = require("../pkg/account/account");
 
 const register = async (req, res) => {
-
+console.log("This is from register", req.body)
     try {
         // ova ke bide validator za input polinjata
         // await validateAccount(req.body, newAccountValidate);
@@ -87,6 +87,61 @@ const login = async (req, res) => {
       return res.status(500).send({ error: "Internal Server Error" });
     }
   };  
+  const passwordLink = async (req, res) => {
+    const {email} = req.body;
+    try {
+      const existsEmail = await getAccountByEmail(email);
+      // check if there is user registered with this email
+      if (existsEmail) {
+          const objectData = {
+            id: existsEmail._id,
+            exp: new Date().getTime() / 1000 + 15 * 60
+          }
+        const key = crypto.createHash('sha512').update(process.env.aes_256_secret).digest('hex').substring(0,32);
+        const encIv = crypto.createHash('sha512').update(process.env.secretIV).digest('hex').substring(0,16);
+        
+          const cipher = crypto.createCipheriv(process.env.encMethod, key, encIv);
+          const encrypted = cipher.update(JSON.stringify(objectData), 'utf8', 'hex') + cipher.final('hex');
+          const token =  Buffer.from(encrypted).toString('base64');
+
+         const emailSendResponse = await sendResetEmail(
+          email,
+          "GetRide Token Password Reset",
+          "resetEmail",
+          token
+          );
+
+        return res.status(200).send(emailSendResponse);
+      } else {
+        return res.status(200).send(false);
+      }
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send({ error: "Internal Server Error" });
+    }
+  };
+
+  const checkResetEmail = async (req, res) => {
+    try {
+      const key = crypto.createHash('sha512').update(process.env.aes_256_secret).digest('hex').substring(0,32);
+        const encIv = crypto.createHash('sha512').update(process.env.secretIV).digest('hex').substring(0,16);
+        
+            const buff = Buffer.from(req.params.resetToken, 'base64');
+            const  newEncryptedData = buff.toString('utf-8');
+            const decipher = crypto.createDecipheriv(process.env.encMethod, key, encIv);
+            const decoded =  decipher.update(newEncryptedData, 'hex', 'utf8') + decipher.final('utf8');
+
+            const decodedParsed = JSON.parse(decoded);
+            const user = await getAccountById(decodedParsed.id);
+            console.log("From checkResetEmail: === > ", user);
+
+        return res.status(200).send({email: user.email, exparation: decodedParsed.exp});
+    } catch (err) {
+      console.log(err);
+      return res.status(500).send({ error: "Internal Server Error" });
+    }
+  };
+
 
   const resetAccountPassword = async (req, res) => {
     try {
@@ -177,10 +232,12 @@ const login = async (req, res) => {
 
   module.exports = {
     register,
-    login,
-    checkEmail,
-    updateUserAccount,
-    resetAccountPassword,
-    deleteUserAccount,
-    getUserAccountById,
+  login,
+  updateUserAccount,
+  passwordLink,
+  checkResetEmail,
+  resetAccountPassword,
+  deleteUserAccount,
+  getUserAccountById,
+  checkEmail,
   };
