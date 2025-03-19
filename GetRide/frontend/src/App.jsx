@@ -10,6 +10,8 @@ import ContactPage from "./pages/Contact/ContactPage";
 import AboutUsPage from "./pages/AboutUs/AboutUsPage";
 import HowItWorksPage from "./pages/HowItWorks/HowItWorksPage";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
+import RegisterPage from "./pages/LoginPage/RegisterPage.jsx";
+import PasswordResetPage from "./pages/LoginPage/ResetPasswordPage.jsx";
 import RidesPage from "./pages/Rides/RidesPage.jsx";
 import GoogleMaps from "./components/GoogleMaps/GoogleMaps.jsx";
 
@@ -55,6 +57,22 @@ function App() {
             element={
               <Layout>
                 <LoginPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <Layout>
+                <RegisterPage />
+              </Layout>
+            }
+          />
+           <Route
+            path="/passwordReset"
+            element={
+              <Layout>
+                <PasswordResetPage />
               </Layout>
             }
           />
