@@ -10,27 +10,40 @@ const RidesComp = ({ rides }) => {
 
   return (
     <div className={classes.ridesList}>
-      <h2>Достапен превоз</h2>
+      <h2>{t("ridesCompTitle")}</h2>
       {rides.length === 0 ? (
-        <p>Нема превоз за избраниот термин.</p>
+        <p>{t("ridesCompDesc")}</p>
       ) : (
         rides.map((ride) => (
           <div key={ride.id} className={classes.rideCard}>
             <h3>{ride.driver.name}</h3>
-            <p>Оцени: {ride.driver.rating}</p>
             <p>
-              Дестинација: {ride.origin} - {ride.destination}
+              {t("ridesCompDescOne")} {ride.driver.rating}
             </p>
-            <p>Поаѓање: {ride.departureTime}</p>
-            <p>Времетраење: {ride.duration} минути</p>
-            <p>Цена: {ride.price} ден.</p>
-            <p>Дозволени домашни миленици: {ride.petsAllowed ? "Да" : "Не"}</p>
             <p>
-              Најмногу два патници на заднo седиште:{" "}
+              {t("ridesCompDescTwo")} {ride.origin} - {ride.destination}
+            </p>
+            <p>
+              {t("ridesCompDescThree")} {ride.departureTime}
+            </p>
+            <p>
+              {t("ridesCompDescFour")}
+              {ride.duration} min
+            </p>
+            <p>
+              {t("ridesCompDescFive")} {ride.price} den.
+            </p>
+            <p>
+              {t("ridesCompDescSix")} {ride.petsAllowed ? "Да" : "Не"}
+            </p>
+            <p>
+              {t("ridesCompDescSeven")}{" "}
               {ride.maxBackSeatPassengers ? "Да" : "Не"}
             </p>
-            <p>Дозволено е пушење: {ride.smokingAllowed ? "Да" : "Не"}</p>
-            <MyButton type="submit" name={"Резервирај"} />
+            <p>
+              {t("ridesCompDescEight")} {ride.smokingAllowed ? "Да" : "Не"}
+            </p>
+            <MyButton type="submit" name={t("ridesCompButton")} />
           </div>
         ))
       )}

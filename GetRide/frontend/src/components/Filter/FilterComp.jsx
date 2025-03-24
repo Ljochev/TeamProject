@@ -83,9 +83,9 @@ const FilterComp = ({ rides, setFilteredRides }) => {
   return (
     <div className={classes.sidebar}>
       <div className={classes.header}>
-        <h4>Подреди по</h4>
+        <h4>{t("filterCompTitleOne")}</h4>
         <button className={classes.resetButton} onClick={resetFilters}>
-          Избриши филтри
+          {t("filterCompButtonOne")}
         </button>
       </div>
 
@@ -98,14 +98,14 @@ const FilterComp = ({ rides, setFilteredRides }) => {
             checked={sortBy === option}
             onChange={() => handleSortChange(option)}
           />
-          {option === "time" && "⏳ Најран термин на поаѓање"}
-          {option === "price" && "💰 Најниска цена"}
-          {option === "duration" && "🚗 Најкратко возење"}
-          {option === "rating" && "⭐ Најдобри оцени на возач"}
+          {option === "time" && t("filterCompSortOne")}
+          {option === "price" && t("filterCompSortTwo")}
+          {option === "duration" && t("filterCompSortThree")}
+          {option === "rating" && t("filterCompSortFour")}
         </label>
       ))}
 
-      <h4>Време на поаѓање</h4>
+      <h4>{t("filterCompTitleTwo")}</h4>
       {["before-06", "06-12", "12-18", "after-18"].map((value, index) => (
         <label key={index}>
           <input
@@ -114,14 +114,14 @@ const FilterComp = ({ rides, setFilteredRides }) => {
             checked={timeFilter.includes(value)}
             onChange={() => handleTimeFilterChange(value)}
           />
-          {value === "before-06" && "Пред 06:00"}
+          {value === "before-06" && t("filterCompTimeOne")}
           {value === "06-12" && "06:00 - 12:00"}
           {value === "12-18" && "12:00 - 18:00"}
-          {value === "after-18" && "После 18:00"}
+          {value === "after-18" && t("filterCompTimeTwo")}
         </label>
       ))}
 
-      <h4>Предности</h4>
+      <h4>{t("filterCompTitleThree")}</h4>
       {Object.entries(preferences).map(([key, value]) => (
         <label key={key} className={value ? classes.selected : ""}>
           <input
@@ -129,14 +129,14 @@ const FilterComp = ({ rides, setFilteredRides }) => {
             checked={value}
             onChange={() => handlePreferenceChange(key)}
           />
-          {key === "maxTwoPassengers" && "🚘 Најмногу 2 на задно седиште"}
-          {key === "petsAllowed" && "🐶 Дозволени домашни миленици"}
-          {key === "smokingAllowed" && "🚬 Дозволено пушење"}
+          {key === "maxTwoPassengers" && t("filterCompBenefitsOne")}
+          {key === "petsAllowed" && t("filterCompBenefitsTwo")}
+          {key === "smokingAllowed" && t("filterCompBenefitsThree")}
         </label>
       ))}
 
       <button className={classes.filterButton} onClick={applyFilters}>
-        Филтер
+        {t("filterCompButtonTwo")}
       </button>
     </div>
   );
