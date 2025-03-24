@@ -16,33 +16,33 @@ const FooterComp = () => {
         <img src={logoImg} alt="Get Ride" className={classes.logo} />
       </div>
       <div className={classes.navContainer}>
-        <h4>Брзи линкови</h4>
+        <h4>{t("link")}</h4>
         <nav className={classes.footerNav}>
           <ul className={classes.footerNavItems}>
             <li>
               <Link to="/login" className={classes.footerNavLink}>
-                Логирај се
+                {t("login")}
               </Link>{" "}
             </li>
             <li>
               <Link to="/register" className={classes.footerNavLink}>
-                Регистрирај се
+                {t("register")}
               </Link>{" "}
             </li>
 
             <li>
               <Link to="/about-us" className={classes.footerNavLink}>
-                За нас
+                {t("aboutUs")}
               </Link>{" "}
             </li>
             <li>
               <Link to="/how-it-works" className={classes.footerNavLink}>
-                Како работи
+                {t("howItWorks")}
               </Link>{" "}
             </li>
             <li>
               <Link to="/contact" className={classes.footerNavLink}>
-                Контакт
+                {t("contact")}
               </Link>{" "}
             </li>
           </ul>
@@ -60,9 +60,7 @@ const FooterComp = () => {
           <img src={facebook} alt="Facebook" />
         </Link>
       </div>
-      <p className={classes.copyright}>
-        Copyright 2025. Сите права се задржани
-      </p>
+      <p className={classes.copyright}>Copyright 2025. {t("rights")}</p>
       {/* <div className="contact-container-info">
         <h4>{t("contact")}</h4>
         <span>

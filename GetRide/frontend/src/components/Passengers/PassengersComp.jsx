@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import classes from "./PassengersComp.module.css";
 
 const PassengersComp = ({ onAdd, passengers }) => {
+  const { t } = useTranslation();
   const [localPassengers, setLocalPassengers] = useState({
     ...passengers,
     reducedMobility: [...(passengers.reducedMobility || [])],
@@ -98,7 +100,7 @@ const PassengersComp = ({ onAdd, passengers }) => {
   return (
     <div className={classes.passengerSelection}>
       <div className={classes.passengerControl}>
-        <span>Возрасни (16+ год.)</span>
+        <span>{t("passengersCompOne")}</span>
         <div>
           <button onClick={() => handleDecrement("adults")}>-</button>
           <span>{localPassengers.adults}</span>
@@ -107,7 +109,7 @@ const PassengersComp = ({ onAdd, passengers }) => {
       </div>
 
       <div className={classes.passengerControl}>
-        <span>Деца (4-15 год.)</span>
+        <span>{t("passengersCompTwo")}</span>
         <div>
           <button onClick={() => handleDecrement("children")}>-</button>
           <span>{localPassengers.children}</span>
@@ -116,7 +118,7 @@ const PassengersComp = ({ onAdd, passengers }) => {
       </div>
 
       <div className={classes.passengerControl}>
-        <span>Бебиња (0-3 год.)</span>
+        <span>{t("passengersCompThree")}</span>
         <div>
           <button onClick={() => handleDecrement("babies")}>-</button>
           <span>{localPassengers.babies}</span>
@@ -125,7 +127,7 @@ const PassengersComp = ({ onAdd, passengers }) => {
       </div>
 
       <div className={classes.passengerControl}>
-        <span>Патници со ограничено движење</span>
+        <span>{t("passengersCompFour")}</span>
         <div>
           <button onClick={handleRemoveReducedMobility}>-</button>
           <span>{localPassengers.reducedMobility?.length || 0}</span>
@@ -139,12 +141,12 @@ const PassengersComp = ({ onAdd, passengers }) => {
       {isReducedMobilityOpen && (
         <div className={classes.passengerDetails}>
           {reducedMobilityList.length === 0 ? (
-            <p>Нема додадени патници со ограничено движење.</p>
+            <p>{t("passengersCompFive")}</p>
           ) : (
             reducedMobilityList.map((mobility, index) => (
               <div key={index} className={classes.reducedMobilityForm}>
                 <div className={classes.formGroup}>
-                  <label>Дата на раѓање:</label>
+                  <label>{t("passengersCompSix")}</label>
                   <input
                     type="date"
                     value={mobility.birthDate}
@@ -154,17 +156,19 @@ const PassengersComp = ({ onAdd, passengers }) => {
                   />
                 </div>
                 <div className={classes.formGroup}>
-                  <label>Тип на инвалидитет:</label>
+                  <label>{t("passengersCompSeven")}</label>
                   <select
                     value={mobility.disabilityType}
                     onChange={(e) =>
                       handleInputChange(index, "disabilityType", e.target.value)
                     }
                   >
-                    <option value="">Изберете тип</option>
-                    <option value="wheelchair">Инвалидска количка</option>
-                    <option value="blindness">Слепило</option>
-                    <option value="other">Друго</option>
+                    <option value="">{t("passengersCompEight")}</option>
+                    <option value="wheelchair">
+                      {t("passengersCompNine")}
+                    </option>
+                    <option value="blindness">{t("passengersCompTen")}</option>
+                    <option value="other">{t("passengersCompEleven")}</option>
                   </select>
                 </div>
               </div>
@@ -181,7 +185,7 @@ const PassengersComp = ({ onAdd, passengers }) => {
           reducedMobilityList.some((item) => !item.isValid)
         }
       >
-        Додади
+        {t("passengersCompButton")}
       </button>
     </div>
   );
