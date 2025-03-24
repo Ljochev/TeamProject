@@ -273,7 +273,9 @@ const Search = ({ vertical = false }) => {
         newPassengers.reducedMobility.length;
 
       const passengerLabel =
-        totalPassengers === 1 ? t("searchDescOne") : t("searchDescOneOne");
+        totalPassengers === 1
+          ? t("searchDescOne")
+          : t("searchDescOneOne", { count: totalPassengers });
 
       setPassengerInputValue(`${totalPassengers}  ${passengerLabel}`);
       setShowPassengersComp(false);
