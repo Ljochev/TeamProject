@@ -90,6 +90,7 @@ import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
 const GOOGLE_MAPS_LIBRARIES = ["places"];
 
 const PostRideForm = ({ onClose }) => {
+  const { t } = useTranslation();
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API,
     libraries: GOOGLE_MAPS_LIBRARIES,
@@ -143,7 +144,7 @@ const PostRideForm = ({ onClose }) => {
     <form className={classes.form} onSubmit={handleSubmit}>
       <h2>{t("postRideFormTitle")}</h2>
       <label>
-        Место на тргнување:
+        {t("postRideFormOne")}
         <Autocomplete
           onLoad={(autocomplete) => setAutocompleteFrom(autocomplete)}
           onPlaceChanged={handlePlaceSelectFrom}
@@ -193,7 +194,7 @@ const PostRideForm = ({ onClose }) => {
         />
       </label>
       <label>
-        Дестинација:
+        {t("postRideFormFive")}
         <Autocomplete
           onLoad={(autocomplete) => setAutocompleteDestination(autocomplete)}
           onPlaceChanged={handlePlaceSelectDestination}
