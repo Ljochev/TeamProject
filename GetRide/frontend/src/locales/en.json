@@ -196,6 +196,8 @@
 
   "homePageForm": "+ Post a Ride",
   "postRideFormAlert": "The ride has been successfully posted!",
+  "postRidePlaceOne": "Start location",
+  "postRidePlaceTwo": "Enter location",
   "postRideFormTitle": "Post a Ride",
   "postRideFormOne": "Departure location:",
   "postRideFormTwo": "Where can you pick up passengers:",
