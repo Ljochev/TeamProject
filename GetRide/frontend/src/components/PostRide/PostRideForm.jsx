@@ -155,7 +155,7 @@ const PostRideForm = ({ onClose }) => {
             value={formData.from}
             onChange={handleChange}
             required
-            placeholder="Start location"
+            placeholder={t("postRidePlaceOne")}
           />
         </Autocomplete>
       </label>
@@ -170,6 +170,7 @@ const PostRideForm = ({ onClose }) => {
             value={formData.pickupPoints}
             onChange={handleChange}
             required
+            placeholder={t("postRidePlaceTwo")}
           />
         </Autocomplete>
       </label>
