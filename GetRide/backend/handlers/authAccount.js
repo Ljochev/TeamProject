@@ -20,11 +20,18 @@ const {
 } = require("../pkg/account/account");
 
 const register = async (req, res) => {
-console.log("This is from register", req.body)
+  const {
+    name,
+    email,
+    password,
+    confirmPassword,
+    phone,
+    profileImage,
+  } = req.body;
     try {
         // ova ke bide validator za input polinjata
         // await validateAccount(req.body, newAccountValidate);
-        const emailExist = await getAccountByEmail(req.body.email);
+        const emailExist = await getAccountByEmail(email);
     if(emailExist) {
         return res.status(400).send({ message: "Account with this email already exists!" });
     }
@@ -35,6 +42,7 @@ console.log("This is from register", req.body)
       }
       req.body.password = bcrypt.hashSync(req.body.password); // password is encoded and its unreadable for human
       const acc = await createAccount(req.body);
+      console.log(acc);
       return res.status(201).send(acc);
 
     } catch ( err ) {

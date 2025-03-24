@@ -15,10 +15,16 @@ const {
   checkEmail,
 } = require("./handlers/authAccount.js");
 const { sendContactMail } = require("./handlers/mail.js");
+const {
+  createRide,
+  getAllRides,
+  getRideById,
+  deleteRide,
+} = require("./handlers/rideHandler.js");
 
 require("dotenv").config();
 require("./pkg/database/config");
-
+const Ride = require("./pkg/rides/ride.js");
 const app = express();
 // ovie ke bidat upotrebeni koga ke pravime password reset preku email
 // app.use(express.static(path.join(__dirname, 'public')));
@@ -57,6 +63,12 @@ app.post("/api/send-contact-mail", sendContactMail);
 app.post("/api/account/passwordResetLink", passwordLink);
 app.get("/api/account/checkResetToken/:resetToken", checkResetEmail);
 app.put("/api/account/resetPassword/:resetToken", resetAccountPassword);
+
+// Ride routes
+app.post("/api/rides", createRide);
+app.get("/api/rides", getAllRides);
+app.get("/api/rides/:id", getRideById);
+app.delete("/api/rides/:id", deleteRide);
 
 const server = app.listen(process.env.PORT, () => {
   console.log(`Server is up on ${process.env.PORT}`);

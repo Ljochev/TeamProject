@@ -85,9 +85,16 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import classes from "./PostRideForm.module.css";
+import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
+
+const GOOGLE_MAPS_LIBRARIES = ["places"];
 
 const PostRideForm = ({ onClose }) => {
-  const { t } = useTranslation();
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API,
+    libraries: GOOGLE_MAPS_LIBRARIES,
+  });
+
   const [formData, setFormData] = useState({
     from: "",
     pickupPoints: "",
@@ -95,6 +102,10 @@ const PostRideForm = ({ onClose }) => {
     time: "",
     destination: "",
   });
+
+  const [autocompleteFrom, setAutocompleteFrom] = useState(null);
+  const [autocompletePickup, setAutocompletePickup] = useState(null);
+  const [autocompleteDestination, setAutocompleteDestination] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -107,28 +118,59 @@ const PostRideForm = ({ onClose }) => {
     onClose();
   };
 
+  const handlePlaceSelectFrom = () => {
+    const place = autocompleteFrom.getPlace();
+    if (place.geometry) {
+      setFormData({ ...formData, from: place.formatted_address || place.name });
+    }
+  };
+
+  const handlePlaceSelectDestination = () => {
+    const place = autocompleteDestination.getPlace();
+    if (place.geometry) {
+      setFormData({
+        ...formData,
+        destination: place.formatted_address || place.name,
+      });
+    }
+  };
+
+  if (!isLoaded) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <form className={classes.form} onSubmit={handleSubmit}>
       <h2>{t("postRideFormTitle")}</h2>
       <label>
-        {t("postRideFormOne")}
-        <input
-          type="text"
-          name="from"
-          value={formData.from}
-          onChange={handleChange}
-          required
-        />
+        Место на тргнување:
+        <Autocomplete
+          onLoad={(autocomplete) => setAutocompleteFrom(autocomplete)}
+          onPlaceChanged={handlePlaceSelectFrom}
+        >
+          <input
+            type="text"
+            name="from"
+            value={formData.from}
+            onChange={handleChange}
+            required
+            placeholder="Start location"
+          />
+        </Autocomplete>
       </label>
       <label>
         {t("postRideFormTwo")}
-        <input
-          type="text"
-          name="pickupPoints"
-          value={formData.pickupPoints}
-          onChange={handleChange}
-          required
-        />
+        <Autocomplete
+          onLoad={(autocomplete) => setAutocompletePickup(autocomplete)}
+        >
+          <input
+            type="text"
+            name="pickupPoints"
+            value={formData.pickupPoints}
+            onChange={handleChange}
+            required
+          />
+        </Autocomplete>
       </label>
       <label>
         {t("postRideFormThree")}
@@ -151,14 +193,20 @@ const PostRideForm = ({ onClose }) => {
         />
       </label>
       <label>
-        {t("postRideFormFive")}
-        <input
-          type="text"
-          name="destination"
-          value={formData.destination}
-          onChange={handleChange}
-          required
-        />
+        Дестинација:
+        <Autocomplete
+          onLoad={(autocomplete) => setAutocompleteDestination(autocomplete)}
+          onPlaceChanged={handlePlaceSelectDestination}
+        >
+          <input
+            type="text"
+            name="destination"
+            value={formData.destination}
+            onChange={handleChange}
+            required
+            placeholder="Destination"
+          />
+        </Autocomplete>
       </label>
       <button type="submit">{t("postRideFormButton")}</button>
     </form>
