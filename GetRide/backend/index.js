@@ -6,6 +6,7 @@ const { expressjwt: jwt } = require("express-jwt");
 const {
   register,
   login,
+  confirmEmail,
   updateUserAccount,
   passwordLink,
   checkResetEmail,
@@ -13,6 +14,8 @@ const {
   deleteUserAccount,
   getUserAccountById,
   checkEmail,
+  // test 
+  getAllAccounts,
 } = require("./handlers/authAccount.js");
 const { sendContactMail } = require("./handlers/mail.js");
 const {
@@ -47,6 +50,7 @@ app.use(
       "/api/account/passwordResetLink",
       // ruta za contact message
       // "/api/contactMessage",
+      { url: /^\/api\/account\/confirmEmail\/.*/, methods: ["POST"] },
       { url: /^\/api\/account\/checkResetToken\/.*/, methods: ["GET"] },
       { url: /^\/api\/account\/resetPassword\/.*/, methods: ["PUT"] },
     ],
@@ -56,13 +60,17 @@ app.use(
 // registration, authentication, and authorization routes
 app.post("/api/account/register", register);
 app.post("/api/account/login", login);
+app.post("/api/account/confirmEmail/:confirmToken", confirmEmail);
 app.put("/api/account/update", updateUserAccount);
 app.post("/api/account/checkEmail", checkEmail);
 app.post("/api/send-contact-mail", sendContactMail);
+app.delete("/api/account/delete", deleteUserAccount);
 // Password reset routes
 app.post("/api/account/passwordResetLink", passwordLink);
 app.get("/api/account/checkResetToken/:resetToken", checkResetEmail);
 app.put("/api/account/resetPassword/:resetToken", resetAccountPassword);
+// Test routs
+app.get("/api/account/allAccounts", getAllAccounts);
 
 // Ride routes
 app.post("/api/rides", createRide);

@@ -17,6 +17,8 @@ const {
     getAccountById,
     updateAccount,
     deleteAccount,
+    // test 
+    getAccounts,
 } = require("../pkg/account/account");
 
 const register = async (req, res) => {
@@ -32,16 +34,39 @@ const register = async (req, res) => {
         // ova ke bide validator za input polinjata
         // await validateAccount(req.body, newAccountValidate);
         const emailExist = await getAccountByEmail(email);
+        console.log(emailExist, "This is from register and returns email if erxist");
+
+
     if(emailExist) {
-        return res.status(400).send({ message: "Account with this email already exists!" });
-    }
+      return res.status(400).send({ message: `${emailExist.email} is already taken, please proceed with login or use a different email.` });
+    };
+
+
     if (req.body.password !== req.body.confirmPassword) {
         return res
           .status(400)
           .send({ message: "Confirm password is not the same as password!" });
-      }
+      };
       req.body.password = bcrypt.hashSync(req.body.password); // password is encoded and its unreadable for human
       const acc = await createAccount(req.body);
+
+      const objectData = {
+        id: acc.id
+      }
+    const key = crypto.createHash('sha512').update(process.env.aes_256_secret).digest('hex').substring(0,32);
+    const encIv = crypto.createHash('sha512').update(process.env.secretIV).digest('hex').substring(0,16);
+    
+      const cipher = crypto.createCipheriv(process.env.encMethod, key, encIv);
+      const encrypted = cipher.update(JSON.stringify(objectData), 'utf8', 'hex') + cipher.final('hex');
+      const token =  Buffer.from(encrypted).toString('base64');
+
+     const emailSendResponse = await sendResetEmail(
+      acc.email,
+      "GetRide Confirm Email",
+      "confirmEmail",
+      token
+      );
+       console.log("This is emailConfirmResponse", emailSendResponse);
       console.log(acc);
       return res.status(201).send(acc);
 
@@ -52,30 +77,81 @@ const register = async (req, res) => {
 };
 
 
-const login = async (req, res) => {
-    try{
-    const {email, password} = req.body;
-    const account = await getAccountByEmail(email);
-    if(!account) {
-      return res.status(400).send("Account not found!");
-    }
-    if (!bcrypt.compareSync(password, account.password)) {
-      return res.status(400).send({ message: "Wrong password"});
-    }
-    const payload = {
-      name: account.name,
-      email: account.email,
-      id: account._id,
-      exp: new Date().getTime() / 1000 + 7 * 24 * 60 * 60, // exparation 7 days
-    };
-    const token = jwt.sign(payload, `${process.env.jwt_secret}`); // jwt token is created
-    return res.status(200).send({token});
-  } catch(err) {
-    console.log(err);
-    res.status(err.status).send(err.error);
-  };
-  };
 
+
+
+  const login = async (req, res) => {
+    
+      try{
+
+      const {email, password} = req.body;
+      const account = await getAccountByEmail(email);
+      if(!account) {
+        return res.status(400).send("Account not found!");
+        // here should be changed for the email to get veryfied !!!!!!!
+  
+      } else if ( !account.isVerified) {
+        const objectData = {
+          id: account.id
+        }
+      const key = crypto.createHash('sha512').update(process.env.aes_256_secret).digest('hex').substring(0,32);
+      const encIv = crypto.createHash('sha512').update(process.env.secretIV).digest('hex').substring(0,16);
+      
+        const cipher = crypto.createCipheriv(process.env.encMethod, key, encIv);
+        const encrypted = cipher.update(JSON.stringify(objectData), 'utf8', 'hex') + cipher.final('hex');
+        const token =  Buffer.from(encrypted).toString('base64');
+  
+        const emailSendResponse = await sendResetEmail(
+        account.email,
+        "GetRide Confirm Email",
+        "confirmEmail",
+        token
+        );
+        console.log("This is emailConfirmResponse", emailSendResponse);
+
+        return res.status(400).send({ message: `Please confirm your email address ( link was send on ${account.email}`});
+      } else  if (!bcrypt.compareSync(password, account.password)) {
+        return res.status(400).send({ message: "Wrong password"});
+      }
+      const payload = {
+        name: account.name,
+        email: account.email,
+        id: account._id,
+        exp: new Date().getTime() / 1000 + 7 * 24 * 60 * 60, // exparation 7 days
+      };
+      const token = jwt.sign(payload, `${process.env.jwt_secret}`); // jwt token is created
+      return res.status(200).send({token});
+    } catch(err) {
+      console.log(err);
+      res.status(err.status).send(err.error);
+    };
+    };
+
+    const confirmEmail = async (req, res) => {
+
+        try{
+          const key = crypto.createHash('sha512').update(process.env.aes_256_secret).digest('hex').substring(0,32);
+        const encIv = crypto.createHash('sha512').update(process.env.secretIV).digest('hex').substring(0,16);
+        
+            const buff = Buffer.from(req.params.confirmToken, 'base64');
+            const  newEncryptedData = buff.toString('utf-8');
+            const decipher = crypto.createDecipheriv(process.env.encMethod, key, encIv);
+            const decoded =  decipher.update(newEncryptedData, 'hex', 'utf8') + decipher.final('utf8');
+
+            const decodedParsed = JSON.parse(decoded);
+
+
+              await updateAccount(decodedParsed.id, {isVerified: true});
+              const account = await getAccountById(decodedParsed.id);
+
+
+        return res.status(200).send({message: `Account with email ${account.email} was successfully verified, you can now log in!`, isVerified: account.isVerified});
+
+      } catch(err) {
+        console.log(err);
+        res.status(err.status).send(err.error);
+      };
+      };
 
   const updateUserAccount =  async (req, res) => {
     try {
@@ -192,12 +268,19 @@ const login = async (req, res) => {
     }
   };
 
+
+
+
   const deleteUserAccount = async (req, res) => {
     try {
-      const account = await getAccountById(req.body.id);
-      // check if there is Account registered with this email
+      console.log(req.auth, " This is from delete ");
+      const account = await getAccountById(req.auth.id);
+
+      console.log(account, " This is the account from delete ");
+
+      // check if there is Account with thi id
       if(account) {
-        await deleteAccount(account._id);
+        await deleteAccount(account.id);
         return res.status(200).send({message: `Account with email: ${account.email} was deleted`});
       } else {
         return res.status(400).send("account not found!");
@@ -238,9 +321,24 @@ const login = async (req, res) => {
     }
   };
 
+const getAllAccounts = async (req, res) => {
+  try {
+    const allAccounts = await getAccounts();
+    if (allAccounts) {
+      return res.status(200).send(allAccounts);
+    } else {
+      return res.status(200).send({ message: false});
+    }
+  } catch (err) {
+    return res.status(500).send({ error: "Internal Server Error" });
+  }
+};
+
+
   module.exports = {
     register,
   login,
+  confirmEmail,
   updateUserAccount,
   passwordLink,
   checkResetEmail,
@@ -248,4 +346,5 @@ const login = async (req, res) => {
   deleteUserAccount,
   getUserAccountById,
   checkEmail,
+  getAllAccounts,
   };

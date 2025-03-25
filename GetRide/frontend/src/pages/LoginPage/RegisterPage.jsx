@@ -247,7 +247,7 @@ const RegisterPage = () => {
   const selectPicture = () => {
     setEditImg(!editImg);
   };
-
+  
   const handleImageUpload = (e) => {
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
@@ -286,7 +286,6 @@ const RegisterPage = () => {
 
   const registerAccount = async (e) => {
     e.preventDefault();
-
     const emailPattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
     if (!emailPattern.test(email)) {
       alert("Please enter a valid email address.");
@@ -316,27 +315,19 @@ const RegisterPage = () => {
       );
 
       if (!response.ok) {
-        let errorData;
-        try {
-          errorData = await response.json(); // Try parsing JSON
-        } catch {
-          errorData = { message: "An unknown error occurred." }; // Default error message
-        }
-
-        alert(errorData.message || "Registration failed.");
-        return; // Stops execution
+        const errorData = await response.json();
+        const message = errorData.message || "Registration failed.";
+        alert(message);
+        return;
       }
 
       const data = await response.json();
 
-      if (data.message) {
-        alert(
-          `${email} is already taken, please proceed with login or use a different email.`
-        );
-      } else {
+      if (data) {
         alert(`Please check your email to verify: ${email}`);
         navigate("/login");
       }
+
     } catch (error) {
       console.error("This is the error: ", error.message);
       alert("An error occurred while processing your request.");
@@ -346,7 +337,7 @@ const RegisterPage = () => {
     <LogPage
       logData={
         <>
-          <form className={styles.register_form}>
+          <form className={styles.register_form} onSubmit={registerAccount}>
             <InputWithLabel
               value={name}
               label={t("fullName")}
@@ -434,9 +425,6 @@ const RegisterPage = () => {
             </span>
             <MyButton
               disabled={!(passStrenght && passMatch && emailAddressPattern)}
-              onClick={(e) => {
-                e.preventDefault(), registerAccount();
-              }}
               name={t("register")}
               width={"100%"}
             />
@@ -451,3 +439,4 @@ const RegisterPage = () => {
 };
 
 export default RegisterPage;
+
