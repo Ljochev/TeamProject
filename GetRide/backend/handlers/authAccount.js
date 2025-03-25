@@ -34,7 +34,6 @@ const register = async (req, res) => {
         // ova ke bide validator za input polinjata
         // await validateAccount(req.body, newAccountValidate);
         const emailExist = await getAccountByEmail(email);
-        console.log(emailExist, "This is from register and returns email if erxist");
 
 
     if(emailExist) {
@@ -87,7 +86,7 @@ const register = async (req, res) => {
       const {email, password} = req.body;
       const account = await getAccountByEmail(email);
       if(!account) {
-        return res.status(400).send("Account not found!");
+        return res.status(400).send({message:"Account not found, please register!", isUser: false });
         // here should be changed for the email to get veryfied !!!!!!!
   
       } else if ( !account.isVerified) {
