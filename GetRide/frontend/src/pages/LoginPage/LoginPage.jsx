@@ -96,9 +96,9 @@
 
 // export default LoginPage
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import EyeLook from "../../assets/eye_lookup.svg";
 import NoEyeLook from "../../assets/eye_no_lookup.svg";
@@ -107,6 +107,10 @@ import LogPage from "../../components/LogPageComps/LogPage";
 import MyButton from "../../components/Button/MyButton";
 import styles from "./LoginPage.module.css";
 
+const useQuery = () => {
+  return new URLSearchParams(useLocation().search);
+};
+
 const LoginPage = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -114,14 +118,23 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [lookPassword, setLookPassword] = useState(false);
+  const [confirmToken, setConfirmToken] = useState('');
+  const [isToken, setIsToken] = useState(false);
+
+  const query = useQuery();
+
+
 
   const handleLook = (e) => {
     e.preventDefault();
     setLookPassword(!lookPassword);
   };
 
+
   const handleLogin = async (e) => {
     e.preventDefault();
+
+
     try {
       const response = await fetch(
         `${import.meta.env.VITE_API_BASE_URL}/api/account/login`,
@@ -137,8 +150,14 @@ const LoginPage = () => {
         }
       );
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        const message = errorData.message || "Login failed.";
+        alert(message);
+        return;
+      }
+      
       const jwt_token = await response.json();
-      console.log(jwt_token);
 
       if (jwt_token && jwt_token.token) {
         console.log(jwt_token);
@@ -146,6 +165,7 @@ const LoginPage = () => {
       }
       const decodedToken = jwtDecode(jwt_token.token);
       console.log(decodedToken);
+
     } catch (error) {
       console.log("This is the error: ", error);
       setError(

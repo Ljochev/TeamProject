@@ -15,7 +15,7 @@ const accoutSchema = mongoose.Schema(
       required: true,
     },
     phone: {
-      type: Number,
+      type: String,
       required: true,
     },
     profileImage: {
@@ -54,10 +54,16 @@ const deleteAccount = async (id) => {
   return await Account.deleteOne({ _id: id });
 };
 
+// test
+const getAccounts = async () => {
+  return await Account.find({});
+};
+
 module.exports = {
   createAccount,
   getAccountByEmail,
   getAccountById,
   updateAccount,
   deleteAccount,
+  getAccounts,
 };
