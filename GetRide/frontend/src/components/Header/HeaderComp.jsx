@@ -72,7 +72,8 @@
 // export default HeaderComp;
 
 import React, { useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { jwtDecode }  from "jwt-decode";
 import { useTranslation } from "react-i18next";
 import logo from "../../assets/logo.png";
 import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
@@ -83,8 +84,34 @@ import classes from "./HeaderComp.module.css";
 const HeaderComp = () => {
   const { i18n, t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const [userName, setUserName] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+
+  const [token, setToken] = useState("");
+  const [isToken, setIsToken] = useState(false);
+  const [decodedToken, setDecodedToken] = useState('');
+
+  useEffect(() => {
+    const tokken = localStorage.getItem('jwt_token');
+  
+    if (tokken && typeof tokken === 'string') {
+      try {
+        setToken(tokken);
+        const decoded = jwtDecode(tokken);
+        setDecodedToken(decoded);
+        setIsToken(true);
+      } catch (error) {
+        console.error("Token decode failed:", error.message);
+        setDecodedToken('');
+        setIsToken(false);
+      }
+    } else {
+      setDecodedToken('');
+      setIsToken(false);
+    }
+  }, [location]);
+
 
   useEffect(() => {
     setUserName(localStorage.getItem("userName") || "");
@@ -92,9 +119,15 @@ const HeaderComp = () => {
     setIsLoading(false);
   }, [i18n]);
 
+  useEffect(() => {
+    setUserName(localStorage.getItem("userName") || "");
+    i18n.changeLanguage(localStorage.getItem("language") || "mk");
+    setIsLoading(false);
+  }, [token]);
+
   const handleLogout = () => {
-    localStorage.removeItem("userName");
-    navigate("/login");
+    localStorage.removeItem("jwt_token");
+    navigate("/");
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -144,14 +177,19 @@ const HeaderComp = () => {
           {t("contact")}
         </NavLink>
       </nav>
-      <div className={classes.headerButtons}>
-        {userName ? (
-          <DropdownMenu userName={userName} onLogout={handleLogout} />
-        ) : (
-          // <span className="headerWelcome">
-          //   {t("welcoming", { name: userName })}
-          // </span>
+      <div className={classes.headerButtons}> 
+        {decodedToken !== "" ? (
           <>
+          <span className="headerWelcome">
+  {t("welcoming", { name: decodedToken.name  })}
+</span>
+          
+          <DropdownMenu userName={decodedToken.name} onLogout={handleLogout} />
+          
+          </>
+        ) : (
+            <>
+          
             <MyButton
               onClick={() => navigate("/register")}
               name={t("register")}

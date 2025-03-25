@@ -118,8 +118,6 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [lookPassword, setLookPassword] = useState(false);
-  const [confirmToken, setConfirmToken] = useState('');
-  const [isToken, setIsToken] = useState(false);
 
   const query = useQuery();
 
@@ -154,6 +152,9 @@ const LoginPage = () => {
         const errorData = await response.json();
         const message = errorData.message || "Login failed.";
         alert(message);
+        if(!errorData.isUser) {
+          navigate("/register");
+        }
         return;
       }
       
@@ -162,9 +163,10 @@ const LoginPage = () => {
       if (jwt_token && jwt_token.token) {
         console.log(jwt_token);
         localStorage.setItem("jwt_token", jwt_token.token);
+        navigate("/");
+
       }
-      const decodedToken = jwtDecode(jwt_token.token);
-      console.log(decodedToken);
+
 
     } catch (error) {
       console.log("This is the error: ", error);
