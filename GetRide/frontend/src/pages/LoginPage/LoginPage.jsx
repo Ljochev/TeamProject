@@ -119,6 +119,7 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [lookPassword, setLookPassword] = useState(false);
 
+
   const query = useQuery();
 
 
@@ -171,7 +172,7 @@ const LoginPage = () => {
     } catch (error) {
       console.log("This is the error: ", error);
       setError(
-        `Failed to login. Please check your email and password. ${error.toString()}`
+        `Failed to login. Please check your email and password. `
       );
     }
   };
